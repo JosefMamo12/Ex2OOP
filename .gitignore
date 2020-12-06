@@ -1,5 +1,6 @@
-.jar
+gson-2.8.6.jar
 .settings/
 bin/
 .classpath
 .project
+.gitignore
