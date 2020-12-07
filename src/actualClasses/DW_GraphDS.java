@@ -155,6 +155,28 @@ public class DW_GraphDS implements directed_weighted_graph {
 		_mc++;
 		return e;
 	}
+	public boolean equals (Object o) {
+		if(!(o instanceof directed_weighted_graph))
+			return false;
+		directed_weighted_graph g = (directed_weighted_graph) o;
+		if(this.edgeSize()!=g.edgeSize()||this.getMC()!=g.getMC() || this.nodeSize()!=g.nodeSize())
+			return false;
+		Iterator<node_data> itr = this.getV().iterator();
+		Iterator<node_data> itr1 = g.getV().iterator();
+		while(itr.hasNext() && itr1.hasNext()) {
+			node_data curr = itr.next() , currCopy = itr1.next();
+			if(!curr.equals(currCopy))
+				return false;
+			Iterator <edge_data> itrE = this.getE(curr.getKey()).iterator();
+			Iterator <edge_data> itrE1 = this.getE(currCopy.getKey()).iterator();
+			while(itrE.hasNext() && itrE1.hasNext()) {
+				if(!(itrE.next().equals(itrE1.next())))
+					return false;
+			}
+
+		}
+		return true;
+	}
 
 	@Override
 	public int nodeSize() {return this._nodeSize ;}
@@ -208,7 +230,31 @@ public class DW_GraphDS implements directed_weighted_graph {
 
 		@Override
 		public void setTag(int t) {this.tag=t;}
-		
+		@Override
+		public boolean equals (Object o) {
+			if(!(o instanceof edge_data))
+				return false;
+			edge_data p = (edge_data) o;
+			if(this.getSrc()!=p.getSrc())
+				return false;
+			if(this.getDest()!=p.getDest())
+				return false;
+			if(this.getWeight()!= p.getWeight())
+				return false;
+			if(this.getTag()!= p.getTag())
+				return false;
+			if(!(this.getInfo()==null && p.getInfo()== null))
+					{
+				if(this.getInfo()==null && p.getInfo()!=null)
+					return false;
+				if(p.getInfo()==null && this.getInfo()!=null)
+					return false;
+				if(!this.getInfo().equals(p.getInfo()))
+					return false;
+
+					}
+			return true;
+		}
 	}
 
 }

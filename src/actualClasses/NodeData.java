@@ -9,7 +9,7 @@ public class NodeData implements node_data {
 	private String _info;
 	private static int counter = 0;
 	/**
-	 * Defultive constructur.
+	 * 
 	 */
 	public NodeData(int key) {
 		_key = key;
@@ -18,7 +18,21 @@ public class NodeData implements node_data {
 		_weight = 0;
 		_info = "Unvisited";
 	}
-
+	/**
+	 * Copy constructur
+	 * @param node_data
+	 */
+	public NodeData (node_data other) {
+		this._key = other.getKey();
+		this.setInfo(other.getInfo());
+		this.setLocation(other.getLocation());
+		this._weight = other.getWeight();
+		this._tag = other.getTag();
+	}
+	/**
+	 * Defultive constructur.
+	 */
+	
 	public NodeData() {
 		_key = counter++;
 		_tag = 0;
@@ -90,14 +104,21 @@ public class NodeData implements node_data {
 		if(!(o instanceof node_data))
 			return false;
 		node_data node = (node_data) o;
-		if(!this._info.equals(node.getInfo()))
-			return false;
 		if((this._key != node.getKey()))
 			return false;
 		if((this._tag != node.getTag()))
 			return false;
 		if((this._weight != node.getWeight()))
 			return false;
+		if(!(this.getInfo() == null && node.getInfo() == null)) {
+			if(this.getInfo()!= null && node.getInfo() == null)
+				return false;
+			if(this.getInfo()== null && node.getInfo() != null)
+				return false;
+			if(!this._info.equals(node.getInfo()))
+				return false;
+		}
+
 		return true;
 
 	}
