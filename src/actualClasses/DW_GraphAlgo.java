@@ -84,6 +84,8 @@ public class DW_GraphAlgo implements dw_graph_algorithms {
 	 */
 	@Override
 	public boolean isConnected() {
+		if(_graph.nodeSize() == 0 && _graph.nodeSize() == 1)
+			return true;
 	boolean ans1 =checkifTransposeGraphConnected(transposeG(_graph));
 	boolean ans2 =checkifRegularGraphConnected(_graph);
 				return ans1||ans2;
@@ -126,9 +128,11 @@ public double shortestPathDist(int src, int dest) {
 		return -1;
 	if(!contains(src) || !contains(dest))
 		return -1;
+	dijkestra(src, _graph);
 	if(_graph.getNode(src).getWeight()== -1 || _graph.getNode(dest).getWeight() == -1)
 		return -1;
-	dijkestra(src, _graph);
+	if(_graph.getNode(src).getWeight()== infinity || _graph.getNode(dest).getWeight() == infinity)
+		return -1;
 	return _graph.getNode(dest).getWeight();
 }
 /**
@@ -146,7 +150,6 @@ public List<node_data> shortestPath(int src, int dest) {
 	if(shortestPathDist(src,dest) == -1) {
 		return null;
 	}
-
 	if (shortestPathDist(src, dest)== infinity) {
 		return null;
 	}
@@ -217,6 +220,7 @@ private void dijkestra (int src, directed_weighted_graph graph) {
 				if(neibo.getTag()==-1 && current.getWeight() + neiboWei < neiboNode.getWeight()) {
 					neiboNode.setWeight(current.getWeight()+neiboWei);
 					_parent.put(neibo.getDest(), current);
+					_graph.getNode(neiboNode.getKey()).setInfo("Visited");
 				}
 			}
 		}
