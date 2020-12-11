@@ -12,14 +12,14 @@ import api.geo_location;
 import api.node_data;
 
 public class DW_GraphDS implements directed_weighted_graph { 
-	HashMap <Integer,node_data>  _vertex;
-	HashMap <Integer, HashMap<Integer,edge_data>> _edges;
+	HashMap <Integer,node_data>  Nodes;
+	HashMap <Integer, HashMap<Integer,edge_data>> Edges;
 	HashMap <Integer,HashMap<Integer,node_data>> _myFather;
 	int _nodeSize , _edgeSize, _mc;
 
 	public DW_GraphDS () {
-		_vertex = new HashMap<Integer, node_data>();
-		_edges = new HashMap<Integer, HashMap<Integer,edge_data>>();
+		Nodes = new HashMap<Integer, node_data>();
+		Edges = new HashMap<Integer, HashMap<Integer,edge_data>>();
 		_myFather = new HashMap<Integer, HashMap<Integer,node_data>>();
 		_nodeSize = _edgeSize = _mc = 0 ;
 	}
@@ -30,8 +30,8 @@ public class DW_GraphDS implements directed_weighted_graph {
 	 */
 	@Override
 	public node_data getNode(int key) {
-		if(_vertex.containsKey(key))
-			return _vertex.get(key);
+		if(Nodes.containsKey(key))
+			return Nodes.get(key);
 		return null;
 	}
 	/**
@@ -43,9 +43,9 @@ public class DW_GraphDS implements directed_weighted_graph {
 	 */
 	@Override
 	public edge_data getEdge(int src, int dest) {
-		if(_vertex.containsKey(src) && _vertex.containsKey(dest)) 
-			if(_edges.get(src).containsKey(dest))
-				return _edges.get(src).get(dest);
+		if(Nodes.containsKey(src) && Nodes.containsKey(dest)) 
+			if(Edges.get(src).containsKey(dest))
+				return Edges.get(src).get(dest);
 
 		return null;
 	}
@@ -55,10 +55,10 @@ public class DW_GraphDS implements directed_weighted_graph {
 	 * @param n
 	 */
 	public void addNode(node_data n) {
-		if(_vertex.containsKey(n.getKey()))
+		if(Nodes.containsKey(n.getKey()))
 			return;
-		_vertex.put(n.getKey(), n);
-		_edges.put(n.getKey(), new HashMap<Integer,edge_data>());
+		Nodes.put(n.getKey(), n);
+		Edges.put(n.getKey(), new HashMap<Integer,edge_data>());
 		_myFather.put(n.getKey(),new HashMap<Integer,node_data>());
 		_nodeSize++;
 		_mc++;
@@ -74,15 +74,15 @@ public class DW_GraphDS implements directed_weighted_graph {
 	public void connect(int src, int dest, double w) {
 		if(src==dest)
 			return;
-		if(!_vertex.containsKey(src)||!_vertex.containsKey(dest))
+		if(!Nodes.containsKey(src)||!Nodes.containsKey(dest))
 			return;
 		if(w<0)
 			return;
-		if(_edges.get(src).containsKey(dest))
+		if(Edges.get(src).containsKey(dest))
 			return;
-		node_data srcNode = _vertex.get(src);
-		node_data destNode = _vertex.get(dest);
-		_edges.get(src).put(dest, new EdgeData(srcNode, destNode,w));
+		node_data srcNode = Nodes.get(src);
+		node_data destNode = Nodes.get(dest);
+		Edges.get(src).put(dest, new EdgeData(srcNode, destNode,w));
 		_myFather.get(dest).put(src, srcNode);
 		_edgeSize++;
 		_mc++;
@@ -95,7 +95,7 @@ public class DW_GraphDS implements directed_weighted_graph {
 	 */
 	@Override
 	public Collection<node_data> getV() {
-		return _vertex.values();
+		return Nodes.values();
 	}
 	/**
 	 * This method returns a pointer (shallow copy) for the
@@ -106,8 +106,8 @@ public class DW_GraphDS implements directed_weighted_graph {
 	 */
 	@Override
 	public Collection<edge_data> getE(int node_id) {
-		if(_vertex.containsKey(node_id))
-			return _edges.get(node_id).values();
+		if(Nodes.containsKey(node_id))
+			return Edges.get(node_id).values();
 		return null;
 	}
 	/**
@@ -119,8 +119,8 @@ public class DW_GraphDS implements directed_weighted_graph {
 	 */
 	@Override
 	public node_data removeNode(int key) {
-		if(_vertex.containsKey(key)) {
-			node_data removedNode = _vertex.get(key);
+		if(Nodes.containsKey(key)) {
+			node_data removedNode = Nodes.get(key);
 			ArrayList<edge_data> le  =new ArrayList<edge_data>(getE(key));
 			for (edge_data edge : le) {
 				removeEdge(key,edge.getDest());
@@ -146,11 +146,11 @@ public class DW_GraphDS implements directed_weighted_graph {
 	public edge_data removeEdge(int src, int dest) {
 		if(src == dest)
 			return null;
-		if(!_vertex.containsKey(src) || !_vertex.containsKey(dest))
+		if(!Nodes.containsKey(src) || !Nodes.containsKey(dest))
 			return null;
-		if(!_edges.get(src).containsKey(dest))
+		if(!Edges.get(src).containsKey(dest))
 			return null;
-		edge_data e = _edges.get(src).remove(dest);
+		edge_data e = Edges.get(src).remove(dest);
 		_edgeSize--;
 		_mc++;
 		return e;

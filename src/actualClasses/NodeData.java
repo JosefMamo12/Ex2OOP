@@ -9,14 +9,14 @@ public class NodeData implements node_data {
 	private String _info;
 	private static int counter = 0;
 	/**
-	 * 
+	 * Key constructr
 	 */
 	public NodeData(int key) {
 		_key = key;
 		_tag = 0;
 		_location = new GeoLocation();
 		_weight = 0;
-		_info = "Unvisited";
+		_info = "";
 	}
 	/**
 	 * Copy constructur
@@ -38,7 +38,7 @@ public class NodeData implements node_data {
 		_tag = 0;
 		_location = new GeoLocation();
 		_weight = 0;
-		_info = "Unvisited";
+		_info = "";
 	}
 	/**
 	 * Returns the key (id) associated with this node.
@@ -166,6 +166,9 @@ class GeoLocation implements geo_location{
 	@Override
 	public double distance(geo_location g) {
 		return Math.sqrt(Math.pow(g.x()-this._x, 2)+Math.pow(g.y()-this._y, 2));
+	}
+	public String toString() {
+		return(this._x+","+this._y+","+this._z+",");
 	}
 
 

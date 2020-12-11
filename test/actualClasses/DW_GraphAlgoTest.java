@@ -15,6 +15,8 @@ import api.dw_graph_algorithms;
 import api.node_data;
 
 
+
+
 class DW_GraphAlgoTest {
 	private static Random _rand;
 	private static long _seed;
@@ -101,29 +103,29 @@ class DW_GraphAlgoTest {
 		return g;
 	}
 
-	//	@Test
-	//	void savetest() {
-	//		directed_weighted_graph g = new DW_GraphDS();
-	//		int v = 10;
-	//		for (int i = 0; i < v ; i++) {
-	//			g.addNode(new NodeData(i));
-	//		}
-	//	g.connect(0, 1, 2.5);
-	//	g.connect(1, 2, 3.8);
-	//	g.connect(1,5,3.2);
-	//	dw_graph_algorithms g1 = new DW_GraphAlgo();
-	//	g1.init(g);
-	//	g1.save("graph.jason");
-	//			
-	//	}
-	//	@Test
-	//	void loadtest() {
-	//		directed_weighted_graph g = new DW_GraphDS();
-	//		dw_graph_algorithms g1 = new DW_GraphAlgo();
-	//		g1.load("graph.json");
-	//		
-	//	}
-	@Test
+		@Test
+		void savetest() {
+			directed_weighted_graph g = new DW_GraphDS();
+			int v = 10;
+			for (int i = 0; i < v ; i++) {
+				g.addNode(new NodeData(i));
+			}
+		g.connect(0, 1, 2.5);
+		g.connect(1, 2, 3.8);
+		g.connect(1,5,3.2);
+		dw_graph_algorithms g1 = new DW_GraphAlgo();
+		g1.init(g);
+		g1.save("graph.json");
+				
+		}
+//		@Test
+//		void loadtest() {
+//			directed_weighted_graph g = new DW_GraphDS();
+//			dw_graph_algorithms g1 = new DW_GraphAlgo();
+//			g1.load("graph.json");
+//			
+//		}
+//	@Test
 	void copyTest() {
 		directed_weighted_graph g = graph_creator(10, 15, 1);
 		directed_weighted_graph g1 = new  DW_GraphDS();
